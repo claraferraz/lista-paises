@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
 
+:root {
+  --gray: #757575;
+  --primary: #8b236f;
+}
+
 * {
   margin: 0;
   padding: 0;
