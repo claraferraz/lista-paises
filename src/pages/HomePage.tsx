@@ -1,11 +1,11 @@
 import { CardSection } from "../components/CardSection/CardSection";
 import { CountryCard } from "../components/CountryCard/CountryCard";
 import { useCountry } from "../context/CountryContext";
-
 import styles from "./styles.module.css";
 
 export const HomePage = () => {
-  const { list } = useCountry();
+  const { list, checkFavorite } = useCountry();
+
   return (
     <section>
       <div className={styles.header}>
@@ -16,7 +16,8 @@ export const HomePage = () => {
       </div>
       <CardSection>
         {list?.map((l, i) => {
-          return <CountryCard key={i} country={l} liked={false} />;
+          const fav = checkFavorite(l);
+          return <CountryCard key={i} country={l} fav={fav} />;
         })}
       </CardSection>
     </section>
