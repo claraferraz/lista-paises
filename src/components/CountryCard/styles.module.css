@@ -13,7 +13,9 @@
 .likebtn {
     border: none;
     background-color: transparent;
-    color: var(--gray-1)
+    color: var(--gray-1);
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
 }
 
 .likebtn.liked {
