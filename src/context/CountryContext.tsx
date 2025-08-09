@@ -2,6 +2,7 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
   type PropsWithChildren,
 } from "react";
@@ -15,7 +16,7 @@ export const CountryContext = createContext<
       favorites: CountryType[] | [];
       addFavorites: (country: CountryType) => void;
       removeFavorites: (country: CountryType) => void;
-      getFavorites: () => CountryType[] | [];
+      clearFavorites: () => void;
     }
   | undefined
 >(undefined);
@@ -33,6 +34,14 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
   const [list, setList] = useState<CountryType[] | undefined>(undefined);
   const [favorites, setFavorites] = useState<CountryType[] | []>([]);
 
+  useEffect(() => {
+    const rawFavList = localStorage.getItem("favorites");
+    if (rawFavList) {
+      const favList = JSON.parse(rawFavList);
+      setFavorites(favList);
+    }
+  }, []);
+
   const getCountryList = async () => {
     try {
       const response = await getAllCountries();
@@ -43,20 +52,27 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
   };
 
   const addFavorites = (country: CountryType) => {
-    setFavorites([...favorites, country]);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    const index = favorites.findIndex(
+      (element) => element.name.common === country.name.common
+    );
+    if (index != -1) {
+      console.log(index);
+      return;
+    } else {
+      setFavorites([...favorites, country]);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
   };
   const removeFavorites = (country: CountryType) => {
     const index = favorites.findIndex((element) => element === country);
-    setFavorites(favorites.splice(index));
+    if (index === -1 || undefined) return;
+    favorites.splice(index, 1);
+    setFavorites(favorites);
     localStorage.setItem("favorites", JSON.stringify(favorites));
   };
-
-  const getFavorites = () => {
-    const storageList = localStorage.getItem("favorites");
-    if (storageList) {
-      return JSON.parse(storageList);
-    }
+  const clearFavorites = () => {
+    setFavorites([]);
+    localStorage.removeItem("favorites");
   };
 
   return (
@@ -65,9 +81,9 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
         list,
         getCountryList,
         favorites,
-        getFavorites,
         addFavorites,
         removeFavorites,
+        clearFavorites,
       }}
     >
       {children}
