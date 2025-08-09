@@ -1,0 +1,42 @@
+.wrapper {
+    border: 1px solid var(--gray-3);
+    padding: 16px;
+    margin-top: 24px;
+    border-radius: 8px;
+    width: 299px;
+}
+
+.image img {
+    width: 100%;
+}
+
+.likebtn {
+    border: none;
+    background-color: transparent;
+    color: var(--gray-1)
+}
+
+.likebtn.liked {
+    color: var(--primary)
+}
+
+.info {
+    margin-top: 16px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.infoTxt {
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.region {
+    font-size: 18px;
+}
+
+.population {
+    color: var(--gray-1)
+}

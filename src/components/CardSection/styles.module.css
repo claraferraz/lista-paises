@@ -1,0 +1,8 @@
+@media screen and (min-width: 736px) {
+    .wrapper {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+}
