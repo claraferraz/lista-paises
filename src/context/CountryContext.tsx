@@ -17,6 +17,7 @@ export const CountryContext = createContext<
       addFavorites: (country: CountryType) => void;
       removeFavorites: (country: CountryType) => void;
       clearFavorites: () => void;
+      checkFavorite: (country: CountryType) => boolean;
     }
   | undefined
 >(undefined);
@@ -56,23 +57,31 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
       (element) => element.name.common === country.name.common
     );
     if (index != -1) {
-      console.log(index);
       return;
     } else {
-      setFavorites([...favorites, country]);
-      localStorage.setItem("favorites", JSON.stringify(favorites));
+      const newFavorites = [...favorites, country];
+      setFavorites(newFavorites);
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
     }
   };
   const removeFavorites = (country: CountryType) => {
-    const index = favorites.findIndex((element) => element === country);
-    if (index === -1 || undefined) return;
-    favorites.splice(index, 1);
-    setFavorites(favorites);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    const updatedFavorites = favorites.filter(
+      (element) => element.name.common !== country.name.common
+    );
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
   const clearFavorites = () => {
     setFavorites([]);
     localStorage.removeItem("favorites");
+  };
+
+  const checkFavorite = (country: CountryType) => {
+    const exists = favorites.find((e) => e.name.common === country.name.common);
+    if (exists) {
+      return true;
+    }
+    return false;
   };
 
   return (
@@ -84,6 +93,7 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
         addFavorites,
         removeFavorites,
         clearFavorites,
+        checkFavorite,
       }}
     >
       {children}
