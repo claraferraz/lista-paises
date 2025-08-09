@@ -5,7 +5,11 @@ export const SearchInput = () => {
   return (
     <div className={styles.wrapper}>
       <form className={styles.form}>
-        <input className={styles.input} type="text" />
+        <input
+          className={styles.input}
+          type="text"
+          placeholder="Pesquisar país"
+        />
         <img className={styles.icon} src={SearchIcon} alt="search icon" />
       </form>
     </div>
