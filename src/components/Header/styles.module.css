@@ -5,10 +5,22 @@
     width: 100%;
 }
 
-.icon {
+.icon,
+.fav {
     cursor: pointer;
+    border: none;
+    background-color: transparent;
 }
 
-.icon:hover {
+.icon {
+    color: var(--gray)
+}
+
+.fav {
+    color: var(--primary)
+}
+
+.icon:hover,
+.fav:hover {
     filter: drop-shadow(0px 0px 10px #00000030);
 }
