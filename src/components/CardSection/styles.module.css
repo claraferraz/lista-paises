@@ -1,3 +1,7 @@
+.wrapper {
+    margin-top: 8px;
+}
+
 @media screen and (min-width: 736px) {
     .wrapper {
         width: 100%;

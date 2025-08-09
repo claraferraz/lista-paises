@@ -1,8 +1,5 @@
-//"all?fields=name,flags,region,population";
-
 import type { CountryType } from "../interface/countryDTO";
 
-//"{pais}?fields=name,flags,region,population";
 const apiURL = process.env.REACT_APP_API_URL;
 
 export const getAllCountries = async (): Promise<CountryType[]> => {

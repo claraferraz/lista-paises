@@ -1,0 +1,11 @@
+.header {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.titleWrapper {
+    width: 100%;
+    text-align: center;
+}
