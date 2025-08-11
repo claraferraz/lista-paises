@@ -16,14 +16,23 @@ function App() {
   const [searchedCountry, setSearchedCountry] = useState<
     CountryType[] | undefined
   >(undefined);
+  const [sortedSearchedCountry, setSortedSearchedCountry] = useState<
+    CountryType[] | undefined
+  >(undefined);
   const [searchWord, setSearchWord] = useState("");
   const [title, setTitle] = useState("Página inicial");
   const [sort, setSort] = useState<SortType>("none");
 
   const url = useLocation();
   const navigate = useNavigate();
-  const { getCountryList, list, favorites, sortFavorites, sortMainList } =
-    useCountry();
+  const {
+    getCountryList,
+    list,
+    favorites,
+    sortFavorites,
+    sortMainList,
+    sortList,
+  } = useCountry();
 
   const getSearchedCountry = (data: string | null) => {
     if (!data) {
@@ -50,6 +59,7 @@ function App() {
 
     if (result) {
       setSearchedCountry(result);
+      setSortedSearchedCountry(result);
       navigate(`/${data}`);
     }
   };
@@ -75,6 +85,13 @@ function App() {
     if (favorites && url.pathname === "/favorites") {
       sortFavorites(sort);
     }
+    if (
+      url.pathname === `/${searchWord}` &&
+      searchWord != "" &&
+      searchedCountry
+    ) {
+      setSortedSearchedCountry(sortList(sort, searchedCountry));
+    }
   }, [sort]);
 
   return (
@@ -87,7 +104,7 @@ function App() {
         </div>
         <SortMenu setSort={setSort} sort={sort} />
       </div>
-      <MainRoutes searchResults={searchedCountry} />
+      <MainRoutes searchResults={sortedSearchedCountry} />
     </Wrapper>
   );
 }

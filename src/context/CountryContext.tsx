@@ -14,6 +14,7 @@ export const CountryContext = createContext<
   | {
       list: CountryType[] | undefined;
       getCountryList: () => void;
+      sortList: (order: SortType, list: CountryType[]) => CountryType[];
       sortMainList: (order: SortType) => void;
       sortFavorites: (order: SortType) => void;
       favorites: CountryType[] | [];
@@ -130,6 +131,7 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
       value={{
         list,
         getCountryList,
+        sortList,
         sortMainList,
         favorites,
         addFavorites,
