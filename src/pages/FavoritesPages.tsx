@@ -8,12 +8,10 @@ export const FavoritesPage = () => {
 
   return (
     <section>
-      <div className={styles.header}>
-        <div className={styles.titleWrapper}>
-          <h2>Favoritos</h2>
-        </div>
-        <p>filter</p>
-        <button onClick={() => clearFavorites()}>clear</button>
+      <div className={styles.btnWrapper}>
+        <button className={styles.btn} onClick={() => clearFavorites()}>
+          clear
+        </button>
       </div>
       <CardSection>
         {favorites.length === 0 && (
