@@ -1,0 +1,47 @@
+.wrapper {
+    position: relative
+}
+
+.btn {
+    border: none;
+    background-color: transparent;
+    color: var(--gray-1);
+    cursor: pointer;
+}
+
+.btn:hover,
+.btn.open {
+    color: var(--primary)
+}
+
+.menu {
+    display: none;
+}
+
+.menu.open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    gap: 10px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    box-shadow: 0 0 8px 8px rgba(138, 34, 111, 0.25);
+    background-color: white;
+}
+
+.option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-size: large;
+}
+
+.option:hover,
+.option.selected {
+    color: var(--primary)
+}
