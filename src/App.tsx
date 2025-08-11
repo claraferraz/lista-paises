@@ -22,7 +22,8 @@ function App() {
 
   const url = useLocation();
   const navigate = useNavigate();
-  const { getCountryList, list, sortList } = useCountry();
+  const { getCountryList, list, favorites, sortFavorites, sortMainList } =
+    useCountry();
 
   const getSearchedCountry = (data: string | null) => {
     if (!data) {
@@ -67,7 +68,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    sortList(sort);
+    console.log(sort);
+    if (list && url.pathname === "/") {
+      sortMainList(sort);
+    }
+    if (favorites && url.pathname === "/favorites") {
+      sortFavorites(sort);
+    }
   }, [sort]);
 
   return (

@@ -14,7 +14,8 @@ export const CountryContext = createContext<
   | {
       list: CountryType[] | undefined;
       getCountryList: () => void;
-      sortList: (order: SortType) => void;
+      sortMainList: (order: SortType) => void;
+      sortFavorites: (order: SortType) => void;
       favorites: CountryType[] | [];
       addFavorites: (country: CountryType) => void;
       removeFavorites: (country: CountryType) => void;
@@ -38,12 +39,18 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
     undefined
   );
   const [list, setList] = useState<CountryType[] | undefined>(originalList);
-  const [favorites, setFavorites] = useState<CountryType[] | []>([]);
+  const [unsortedFavorties, setUnsortedFavorites] = useState<
+    CountryType[] | []
+  >([]);
+  const [favorites, setFavorites] = useState<CountryType[] | []>(
+    unsortedFavorties
+  );
 
   useEffect(() => {
     const rawFavList = localStorage.getItem("favorites");
     if (rawFavList) {
       const favList = JSON.parse(rawFavList);
+      setUnsortedFavorites(favList);
       setFavorites(favList);
     }
   }, []);
@@ -58,31 +65,32 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const sortList = (order: SortType) => {
-    if (!originalList) return;
+  const sortList = (order: SortType, list: CountryType[]) => {
     switch (order) {
       case "none":
-        setList(originalList);
-        break;
+        return list;
+
       case "asc": {
-        const sortedList = originalList.toSorted(
-          (a, b) => a.population - b.population
-        );
-        setList(sortedList);
-        break;
+        const sortedList = list.toSorted((a, b) => a.population - b.population);
+        return sortedList;
       }
       case "desc": {
-        const sortedList = originalList.toSorted(
-          (a, b) => b.population - a.population
-        );
-        setList(sortedList);
-        break;
+        const sortedList = list.toSorted((a, b) => b.population - a.population);
+        return sortedList;
       }
 
       default:
-        setList(originalList);
-        break;
+        return list;
     }
+  };
+
+  const sortMainList = (sort: SortType) => {
+    if (!originalList) return;
+    setList(sortList(sort, originalList));
+  };
+
+  const sortFavorites = (sort: SortType) => {
+    setFavorites(sortList(sort, unsortedFavorties));
   };
 
   const addFavorites = (country: CountryType) => {
@@ -122,12 +130,13 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
       value={{
         list,
         getCountryList,
-        sortList,
+        sortMainList,
         favorites,
         addFavorites,
         removeFavorites,
         clearFavorites,
         checkFavorite,
+        sortFavorites,
       }}
     >
       {children}
