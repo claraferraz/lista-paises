@@ -6,13 +6,15 @@ import {
   useState,
   type PropsWithChildren,
 } from "react";
-import type { CountryType } from "../interface/countryDTO";
+import type { CountryType } from "../interface/countryType";
 import { getAllCountries } from "../service/countryService";
+import type { SortType } from "../interface/sortType";
 
 export const CountryContext = createContext<
   | {
       list: CountryType[] | undefined;
       getCountryList: () => void;
+      sortList: (order: SortType) => void;
       favorites: CountryType[] | [];
       addFavorites: (country: CountryType) => void;
       removeFavorites: (country: CountryType) => void;
@@ -32,7 +34,10 @@ export const useCountry = () => {
 };
 
 export const CountryProvider = ({ children }: PropsWithChildren) => {
-  const [list, setList] = useState<CountryType[] | undefined>(undefined);
+  const [originalList, setOriginalList] = useState<CountryType[] | undefined>(
+    undefined
+  );
+  const [list, setList] = useState<CountryType[] | undefined>(originalList);
   const [favorites, setFavorites] = useState<CountryType[] | []>([]);
 
   useEffect(() => {
@@ -46,9 +51,37 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
   const getCountryList = async () => {
     try {
       const response = await getAllCountries();
+      setOriginalList(response);
       setList(response);
     } catch {
       throw new Error("something went wrong");
+    }
+  };
+
+  const sortList = (order: SortType) => {
+    if (!originalList) return;
+    switch (order) {
+      case "none":
+        setList(originalList);
+        break;
+      case "asc": {
+        const sortedList = originalList.toSorted(
+          (a, b) => a.population - b.population
+        );
+        setList(sortedList);
+        break;
+      }
+      case "desc": {
+        const sortedList = originalList.toSorted(
+          (a, b) => b.population - a.population
+        );
+        setList(sortedList);
+        break;
+      }
+
+      default:
+        setList(originalList);
+        break;
     }
   };
 
@@ -89,6 +122,7 @@ export const CountryProvider = ({ children }: PropsWithChildren) => {
       value={{
         list,
         getCountryList,
+        sortList,
         favorites,
         addFavorites,
         removeFavorites,

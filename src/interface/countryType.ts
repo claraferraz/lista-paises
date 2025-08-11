@@ -10,7 +10,7 @@ export type CountryType = {
   };
   name: {
     common: string;
-    nativeName: NativeNames;
+    nativeName: Record<string, NativeNames>;
   };
   region: string;
   population: number;

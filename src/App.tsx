@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { Header } from "./components/Header/Header";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import { useCountry } from "./context/CountryContext";
-import type { CountryType } from "./interface/countryDTO";
+import type { CountryType, NativeNames } from "./interface/countryType";
 import { SortMenu } from "./components/SortMenu/SortMenu";
 import "./App.css";
+import type { SortType } from "./interface/sortType";
 
 function App() {
   const [fav, setFav] = useState(false);
@@ -17,26 +18,28 @@ function App() {
   >(undefined);
   const [searchWord, setSearchWord] = useState("");
   const [title, setTitle] = useState("Página inicial");
+  const [sort, setSort] = useState<SortType>("none");
 
   const url = useLocation();
   const navigate = useNavigate();
-  const { getCountryList, list } = useCountry();
+  const { getCountryList, list, sortList } = useCountry();
 
   const getSearchedCountry = (data: string | null) => {
     if (!data) {
       return;
     }
+
     setSearchWord(data);
     const result = list?.filter((country) => {
-      const commonName = country.name.common.toLowerCase();
-      const nativeNames = Object.values(country.name.nativeName).flatMap(
-        (nativeName) => {
-          return [
-            nativeName.official.toLowerCase(),
-            nativeName.common.toLowerCase(),
-          ];
-        }
-      );
+      const commonName: string = country.name.common.toLowerCase();
+      const nativeNames: string[] = Object.values<NativeNames>(
+        country.name.nativeName
+      ).flatMap((nativeName) => {
+        return [
+          nativeName.official.toLowerCase(),
+          nativeName.common.toLowerCase(),
+        ];
+      });
       return (
         commonName.includes(data.toLowerCase()) ||
         nativeNames.find((native) => native.includes(data.toLowerCase())) !==
@@ -54,7 +57,7 @@ function App() {
     setFav(url.pathname === "/favorites" ? true : false);
     if (url.pathname === "/") setTitle("Página inicial");
     if (url.pathname === "/favorites") setTitle("Favoritos");
-    if (url.pathname === `/${searchWord}` && url.pathname != "")
+    if (url.pathname === `/${searchWord}` && searchWord != "")
       setTitle(`Resultados da busca para "${searchWord}"`);
   }, [url.pathname]);
 
@@ -62,6 +65,10 @@ function App() {
     getCountryList();
     setTitle("Página Inicial");
   }, []);
+
+  useEffect(() => {
+    sortList(sort);
+  }, [sort]);
 
   return (
     <Wrapper>
@@ -71,9 +78,9 @@ function App() {
         <div className="titleWrapper">
           <h2>{title}</h2>
         </div>
-        <SortMenu />
+        <SortMenu setSort={setSort} sort={sort} />
       </div>
-      <MainRoutes searchResults={searchedCountry} sort={"asc"} />
+      <MainRoutes searchResults={searchedCountry} />
     </Wrapper>
   );
 }
