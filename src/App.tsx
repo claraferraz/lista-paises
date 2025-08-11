@@ -51,10 +51,6 @@ function App() {
     getCountryList();
   }, []);
 
-  useEffect(() => {
-    console.log(searchedCountry);
-  }, [searchedCountry]);
-
   return (
     <Wrapper>
       <Header fav={fav} />
