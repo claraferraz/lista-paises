@@ -1,11 +1,11 @@
 .section {
-    width: 100%;
+    width: 90%;
 }
 
 .btnWrapper {
     display: flex;
     justify-content: right;
-    margin: 20px 0;
+    margin-top: 20px
 }
 
 .btn {
