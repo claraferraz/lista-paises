@@ -24,8 +24,8 @@ export const SearchBar = ({ onSubmit }: Props) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button type="submit">
-          <img className={styles.icon} src={SearchIcon} alt="search icon" />
+        <button className={styles.icon} type="submit">
+          <img src={SearchIcon} alt="search icon" />
         </button>
       </form>
     </div>
