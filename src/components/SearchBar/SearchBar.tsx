@@ -6,7 +6,7 @@ type Props = {
   onSubmit: (query: string | null) => void;
 };
 
-export const SearchInput = ({ onSubmit }: Props) => {
+export const SearchBar = ({ onSubmit }: Props) => {
   const [search, setSearch] = useState("");
 
   const handleSearch = () => {
