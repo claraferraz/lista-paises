@@ -1,7 +1,7 @@
 import { CardSection } from "../components/CardSection/CardSection";
 import { CountryCard } from "../components/CountryCard/CountryCard";
 import { useCountry } from "../context/CountryContext";
-import type { CountryType } from "../interface/countryDTO";
+import type { CountryType } from "../interface/countryType";
 
 type Props = {
   country: CountryType[];

@@ -1,8 +1,6 @@
-type NativeNames = {
-  [key: string]: {
-    official: string;
-    common: string;
-  };
+export type NativeNames = {
+  official: string;
+  common: string;
 };
 
 export type CountryType = {
