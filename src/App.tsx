@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Wrapper } from "./components/Wrapper/Wrapper";
 import { MainRoutes } from "./routes/MainRoutes";
 import { useEffect, useState } from "react";
 import { Header } from "./components/Header/Header";
-import { SearchInput } from "./components/SearchInput/SearchInput";
+import { SearchBar } from "./components/SearchBar/SearchBar";
 import { useCountry } from "./context/CountryContext";
 import type { CountryType } from "./interface/countryDTO";
-import { SearchResultPage } from "./pages/SearchResultPage";
 
 function App() {
   const [fav, setFav] = useState(false);
   const url = useLocation();
+  const navigate = useNavigate();
   const { getCountryList, list } = useCountry();
   const [searchedCountry, setSearchedCountry] = useState<
     CountryType[] | undefined
@@ -21,7 +21,6 @@ function App() {
     if (!data) {
       return;
     }
-
     const result = list?.filter((country) => {
       const commonName = country.name.common.toLowerCase();
       const nativeNames = Object.values(country.name.nativeName).flatMap(
@@ -32,7 +31,6 @@ function App() {
           ];
         }
       );
-
       return (
         commonName.includes(data.toLowerCase()) ||
         nativeNames.find((native) => native.includes(data.toLowerCase())) !==
@@ -40,7 +38,10 @@ function App() {
       );
     });
 
-    if (result) setSearchedCountry(result);
+    if (result) {
+      setSearchedCountry(result);
+      navigate(`/${data}`);
+    }
   };
 
   useEffect(() => {
@@ -54,9 +55,8 @@ function App() {
   return (
     <Wrapper>
       <Header fav={fav} />
-      <SearchInput onSubmit={getSearchedCountry} />
-      {searchedCountry && <SearchResultPage country={searchedCountry} />}
-      {!searchedCountry && <MainRoutes />}
+      <SearchBar onSubmit={getSearchedCountry} />
+      <MainRoutes countries={searchedCountry} />
     </Wrapper>
   );
 }

@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import { CardSection } from "../components/CardSection/CardSection";
 import { CountryCard } from "../components/CountryCard/CountryCard";
 import { useCountry } from "../context/CountryContext";
@@ -10,12 +11,14 @@ type Props = {
 
 export const SearchResultPage = ({ country }: Props) => {
   const { checkFavorite } = useCountry();
+  const url = useParams();
+  const query = url.search;
 
   return (
     <section>
       <div className={styles.header}>
         <div className={styles.titleWrapper}>
-          <h2>Resultados da Busca</h2>
+          <h2>Resultados da Busca por "{query}"</h2>
         </div>
         <p>filter</p>
       </div>
