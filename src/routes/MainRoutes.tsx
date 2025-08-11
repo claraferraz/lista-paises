@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { HomePage } from "../pages/HomePage";
 import { FavoritesPage } from "../pages/FavoritesPages";
 import { SearchResultPage } from "../pages/SearchResultPage";
-import type { CountryType } from "../interface/countryDTO";
+import type { CountryType } from "../interface/countryType";
 
 type Props = {
   searchResults: CountryType[] | undefined;
