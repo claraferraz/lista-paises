@@ -56,7 +56,7 @@ function App() {
     <Wrapper>
       <Header fav={fav} />
       <SearchBar onSubmit={getSearchedCountry} />
-      <MainRoutes countries={searchedCountry} />
+      <MainRoutes searchResults={searchedCountry} />
     </Wrapper>
   );
 }

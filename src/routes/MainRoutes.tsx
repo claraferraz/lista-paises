@@ -5,18 +5,18 @@ import { SearchResultPage } from "../pages/SearchResultPage";
 import type { CountryType } from "../interface/countryDTO";
 
 type Props = {
-  countries: CountryType[] | undefined;
+  searchResults: CountryType[] | undefined;
 };
 
-export const MainRoutes = ({ countries }: Props) => {
+export const MainRoutes = ({ searchResults }: Props) => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/favorites" element={<FavoritesPage />} />
-      {countries && (
+      {searchResults && (
         <Route
           path="/:search"
-          element={<SearchResultPage country={countries} />}
+          element={<SearchResultPage country={searchResults} />}
         />
       )}
     </Routes>
