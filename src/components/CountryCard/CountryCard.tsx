@@ -1,5 +1,5 @@
 import { useCountry } from "../../context/CountryContext";
-import type { CountryType } from "../../interface/countryDTO";
+import type { CountryType } from "../../interface/countryType";
 import styles from "./styles.module.css";
 
 type Props = {
