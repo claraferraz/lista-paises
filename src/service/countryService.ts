@@ -1,4 +1,4 @@
-import type { CountryType } from "../interface/countryDTO";
+import type { CountryType } from "../interface/countryType";
 
 const apiURL = import.meta.env.VITE_API_URL;
 
