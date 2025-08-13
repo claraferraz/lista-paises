@@ -13,7 +13,7 @@ Este projeto utiliza `npm` para gerenciamento de pacotes.
 
 ### Variáveis de Ambiente
 
-Este projeto utiliza [RestCountries Api](https://restcountries.com/#api-endpoints-using-this-project) para puxar os dados dos países. Para utilizar é necessário esta variável de ambiente:
+Este projeto utiliza [RestCountries Api](https://restcountries.com/#api-endpoints-using-this-project) para puxar os dados dos países. Para utilizar é necessário incluir esta variável de ambiente:
 
 ```
 VITE_API_URL=https://restcountries.com/v3.1
