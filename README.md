@@ -1,69 +1,58 @@
-# React + TypeScript + Vite
+# Lista de Países
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é uma lista de países simples, com ordenação por população, busca e favoritos. Foi desenvolvido em React e TypeScript para o desafio da vaga de Front-end Jr na Secretaria de Educação do município de João Pessoa.
 
-Currently, two official plugins are available:
+O deploy está atualmente no [Vercel](https://lista-paises-sable.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Inicializando
 
-## Expanding the ESLint configuration
+Este projeto utiliza `npm` para gerenciamento de pacotes.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. `npm install`
+2. `npm run dev`
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Variáveis de Ambiente
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Este projeto utiliza [RestCountries Api](https://restcountries.com/#api-endpoints-using-this-project) para puxar os dados dos países. Para utilizar é necessário esta variável de ambiente:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+VITE_API_URL=https://restcountries.com/v3.1
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Bibliotecas e ferramentas utilizadas
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Parte do desafio consistia em não utilizar bibliotecas, mas fui autorizada a utilizar:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- [React Router](https://reactrouter.com): para o gerenciamento de rotas.
+
+## Features opcionais adicionadas
+
+- Responsividade para telas com largura menor que 736px, breakpoint sugerido em alguns projetos que já realizei do Front-end Mentor
+- Funcionalidade de Limpar Lista de Favoritos, para facilitar a visualização da mensagem exibida na tela quando não há países favoritados.
+
+## Ideias de melhorias
+
+### Bibliotecas de estilização ou de componentes
+
+Normalmente eu utilizaria alguma biblioteca de estilização como Tailwind para facilitar o desenvolvimento, porém foi utilizado CSS modular para se encaixar nos requisitos do desafio.
+
+Caso a aplicação fosse mais complexa, poderia ser utilizado biblioteca de componentes como [Material UI](https://mui.com/material-ui/all-components/), [Chakra UI](https://chakra-ui.com/docs/get-started/installation), entre outros.
+
+### Separação das funções de filtro e ordenação
+
+Outro requisito do desafio consistia em deixar a lista completa, favoritos, filtro e ordenação no componente App.tsx.
+Particularmente, eu daria preferência a deixar este componente o mais limpo possível e separar essas funcionalidades com mais hooks personalizados ou utilizar bibliotecas como [Redux](https://redux-toolkit.js.org/) ou [Zustand](https://zustand-demo.pmnd.rs/) para salvar essas preferências do usuário.
+
+### Banco de Dados
+
+Para salvar os favoritos, eu daria preferência a criar um sistema de registro e login e salvar os favoritos em um banco de dados, para evitar salvar no local storage, mas essas funcionalidades vão além do escopo da aplicação.
+
+### React Query
+
+Para monitorar o estado da requisição, como loading, e erros, a biblioteca React-Query poderia ser utilizada, mas foi deixada de lado pelos requisitos do desafio.
+
+## Design
+
+Tomei a liberdade de criar rapidamente um design simples para guiar a estilização do projeto. O arquivo Figma está na pasta 'src/assets'.
+
+Algumas alterações foram feitas durante o desenvolvimento para complementar funcionalidades, como por exemplo, o botão de limpar favoritos
